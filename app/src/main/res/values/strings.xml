@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">Login</string>
+    <string name="nom">Name</string>
+    <string name="e_mail">E-mail</string>
+    <string name="mot_de_passe">Password</string>
+    <string name="inscription">Register</string>
+    <string name="d_j_client_connectez_vous_ici">Already registered ? Login here</string>
+    <string name="connexion">Login</string>
+    <string name="nouveau_client_inscrivez_vous_ici">New here ? Create account here</string>
+    <string name="zone_texte_ne_peut_pas_etre_vide">Text box cannot be empty</string>
+    <string name="mdp_6_caracteres">Password must contain 6 characters</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

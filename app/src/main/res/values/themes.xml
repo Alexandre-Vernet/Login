@@ -18,6 +18,15 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="editText">
+        <item name="android:textSize">25dp</item>
+        <item name="android:padding">20dp</item>
+    </style>
+
+    <style name="textView">
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_marginBottom">25dp</item>
+    </style>
 
     <style name="Theme.Login.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

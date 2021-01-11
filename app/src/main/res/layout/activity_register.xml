@@ -5,7 +5,37 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
+
+    <EditText
+        android:id="@+id/editTextLastName"
+        style="@style/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/nom"
+        android:inputType="text"
+        android:text="VERNET" />
+
+    <EditText
+        android:id="@+id/editTextFirstName"
+        style="@style/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="Prénom"
+        android:inputType="text"
+        android:text="Prénom" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        style="@style/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="Téléphone"
+        android:inputType="phone"
+        android:text="0778555958" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -29,21 +59,20 @@
         android:text="alex123" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:padding="20dp"
-        android:text="@string/connexion"
+        android:text="@string/inscription"
         android:textSize="25sp" />
 
-
     <TextView
-        android:id="@+id/textViewRegister"
+        android:id="@+id/textViewLogin"
         style="@style/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nouveau_client_inscrivez_vous_ici" />
+        android:text="@string/d_j_client_connectez_vous_ici" />
 
     <ProgressBar
         android:id="@+id/progressBar"

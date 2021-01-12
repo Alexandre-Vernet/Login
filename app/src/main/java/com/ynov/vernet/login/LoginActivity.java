@@ -42,6 +42,20 @@ public class LoginActivity extends AppCompatActivity {
             String password = editTextPsw.getText().toString();
             progressBar.setVisibility(View.VISIBLE);
 
+            // Enter a valide email & psw
+            if (email.isEmpty()) {
+                editTextEmail.setError("Texbox cannot be empty !");
+                return;
+            }
+            if (password.isEmpty()) {
+                editTextPsw.setError("Texbox cannot be empty !");
+                return;
+            }
+            if (password.length() < 6) {
+                editTextPsw.setError("Password must contain 6 characters");
+                return;
+            }
+
             // Adding Firebase
             mAuth = FirebaseAuth.getInstance();
 

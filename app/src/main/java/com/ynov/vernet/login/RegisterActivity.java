@@ -28,6 +28,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // if user is already login
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+
         editTextLastName = findViewById(R.id.editTextLastName);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextPhone = findViewById(R.id.editTextPhone);
@@ -37,8 +43,23 @@ public class RegisterActivity extends AppCompatActivity {
         textViewLogin = findViewById(R.id.textViewLogin);
 
         findViewById(R.id.btnRegister).setOnClickListener(v -> {
+            // Get data from field
             String email = editTextEmail.getText().toString();
             String password = editTextPsw.getText().toString();
+
+            // Enter a valide email & psw
+            if (email.isEmpty()) {
+                editTextEmail.setError("Texbox cannot be empty !");
+                return;
+            }
+            if (password.isEmpty()) {
+                editTextPsw.setError("Texbox cannot be empty !");
+                return;
+            }
+            if (password.length() < 6) {
+                editTextPsw.setError("Password must contain 6 characters");
+                return;
+            }
             progressBar.setVisibility(View.VISIBLE);
 
             // Adding Firebase

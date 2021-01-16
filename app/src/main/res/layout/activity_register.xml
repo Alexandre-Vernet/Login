@@ -25,7 +25,7 @@
         android:autofillHints=""
         android:hint="Prénom"
         android:inputType="text"
-        android:text="Prénom" />
+        android:text="Alexandre" />
 
     <EditText
         android:id="@+id/editTextPhone"

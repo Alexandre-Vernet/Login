@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -20,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView textViewRegister;
     ProgressBar progressBar;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth fAuth;
 
     private static final String TAG = "LoginActivity";
 
@@ -28,6 +27,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        fAuth = FirebaseAuth.getInstance();
+
+        // If user is already login
+//        if (fAuth.getCurrentUser() != null) {
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//            finish();
+//        }
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPsw = findViewById(R.id.editTextPsw);
@@ -56,10 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            // Adding Firebase
-            mAuth = FirebaseAuth.getInstance();
-
-            mAuth.signInWithEmailAndPassword(email, password)
+            fAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -73,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         });
-
 
         // Register
         textViewRegister.setOnClickListener(v -> {

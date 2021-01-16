@@ -9,9 +9,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -20,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
+    FirebaseFirestore fStore;
 
     private static final String TAG = "RegisterActivity";
 
@@ -28,11 +35,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // if user is already login
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        }
+        mAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        // If user is already login
+//        if (mAuth.getCurrentUser() != null) {
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//            finish();
+//        }
 
         editTextLastName = findViewById(R.id.editTextLastName);
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -47,7 +57,11 @@ public class RegisterActivity extends AppCompatActivity {
             String email = editTextEmail.getText().toString();
             String password = editTextPsw.getText().toString();
 
-            // Enter a valide email & psw
+            String lastName = editTextLastName.getText().toString();
+            String firstName = editTextFirstName.getText().toString();
+            String phone = editTextPhone.getText().toString();
+
+            // Enter a valid email & psw
             if (email.isEmpty()) {
                 editTextEmail.setError("Texbox cannot be empty !");
                 return;
@@ -62,12 +76,29 @@ public class RegisterActivity extends AppCompatActivity {
             }
             progressBar.setVisibility(View.VISIBLE);
 
-            // Adding Firebase
-            mAuth = FirebaseAuth.getInstance();
 
+            // Create user with Email & psw
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
+                            // Create a new user with data
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("email", email);
+                            user.put("firstName", firstName);
+                            user.put("lastName", lastName);
+                            user.put("phone", phone);
+
+                            // Store data
+                            fStore.collection("users")
+                                    .document(mAuth.getUid())
+                                    .set(user)
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(TAG, "Error adding document", e);
+                                        }
+                                    });
+
                             // Start MainActivity
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();

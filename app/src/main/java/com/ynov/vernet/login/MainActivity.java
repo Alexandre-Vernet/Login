@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
 
     TextView textViewEmail, textViewFirstName;
+    ImageView imageViewPhoto;
 
     private static final String TAG = "MainActivity";
 
@@ -48,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -68,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
         textViewEmail = headerView.findViewById(R.id.textViewEmail);
         textViewFirstName = headerView.findViewById(R.id.textViewFirstName);
+        imageViewPhoto = headerView.findViewById(R.id.imageViewPhoto);
+        imageViewPhoto.setImageResource(R.drawable.mood);
+        imageViewPhoto.getLayoutParams().width = 250;
+        imageViewPhoto.getLayoutParams().height = 250;
+        imageViewPhoto.setAdjustViewBounds(true);
 
 
         // Display name & email of user logged
@@ -97,11 +102,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_disconnect:
-                Intent i = new Intent(this, LoginActivity.class);
-                i.putExtra("logout", true);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
-                startActivity(i);
-                finish();
+                fAuth.signOut();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

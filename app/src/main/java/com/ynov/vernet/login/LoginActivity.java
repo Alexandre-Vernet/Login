@@ -1,9 +1,11 @@
 package com.ynov.vernet.login;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,11 +33,9 @@ public class LoginActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         // If user is already logged
-        boolean logout = getIntent().getBooleanExtra("logout", true);
-        if (!logout) {
+        if (fAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
-            return;
         }
 
         editTextEmail = findViewById(R.id.editTextEmail);

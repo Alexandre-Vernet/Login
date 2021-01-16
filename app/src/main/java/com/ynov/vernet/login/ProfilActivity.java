@@ -3,6 +3,7 @@ package com.ynov.vernet.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ public class ProfilActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
-    TextView textViewFirstName, textViewLastName, textViewPhone;
+    TextView textViewName, textViewEmail, textViewPhone;
 
     private static final String TAG = "ProfilActivity";
 
@@ -36,19 +37,25 @@ public class ProfilActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-
         String userId = fAuth.getCurrentUser().getUid();
 
-        textViewFirstName = findViewById(R.id.textViewFirstName);
-        textViewLastName = findViewById(R.id.textViewLastName);
+
+        textViewName = findViewById(R.id.textViewName);
+        textViewEmail = findViewById(R.id.textViewEmail);
         textViewPhone = findViewById(R.id.textViewPhone);
 
         // Display information of logged user
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, (value, error) -> {
-            textViewFirstName.setText(value.getString("firstName"));
-            textViewLastName.setText(value.getString("lastName"));
+            textViewName.setText(value.getString("firstName") + " " + value.getString("lastName"));
+            textViewEmail.setText(value.getString("email"));
             textViewPhone.setText(value.getString("phone"));
+        });
+
+        // Back to Main
+        findViewById(R.id.btnBack).setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
         });
     }
 

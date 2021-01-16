@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:hint="@string/e_mail"
-        android:inputType="textEmailAddress"
-        android:text="alexandre.vernet@ynov.com" />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/editTextPsw"
@@ -25,8 +24,7 @@
         android:layout_marginBottom="50dp"
         android:autofillHints=""
         android:hint="@string/mot_de_passe"
-        android:inputType="textPassword"
-        android:text="alex123" />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnLogin"

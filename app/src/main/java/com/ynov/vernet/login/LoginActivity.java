@@ -1,6 +1,8 @@
 package com.ynov.vernet.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,6 +45,11 @@ public class LoginActivity extends AppCompatActivity {
         textViewRegister = findViewById(R.id.textViewRegister);
         progressBar = findViewById(R.id.progressBar);
 
+        // If user has already connected
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String data = sharedPref.getString("email", null);
+        editTextEmail.setText(data);
+
 
         findViewById(R.id.btnLogin).setOnClickListener(v -> {
 
@@ -54,20 +61,29 @@ public class LoginActivity extends AppCompatActivity {
             // Enter a valid email & psw
             if (email.isEmpty()) {
                 editTextEmail.setError("Texbox cannot be empty !");
+                progressBar.setVisibility(View.INVISIBLE);
                 return;
             }
             if (password.isEmpty()) {
                 editTextPsw.setError("Texbox cannot be empty !");
+                progressBar.setVisibility(View.INVISIBLE);
                 return;
             }
             if (password.length() < 6) {
                 editTextPsw.setError("Password must contain 6 characters");
+                progressBar.setVisibility(View.INVISIBLE);
                 return;
             }
 
             fAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
+                            // Save login in memory
+                            SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("email", email);
+                            editor.apply();
+
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         } else {

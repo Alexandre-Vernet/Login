@@ -30,11 +30,13 @@ public class LoginActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
 
-        // If user is already login
-//        if (fAuth.getCurrentUser() != null) {
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//            finish();
-//        }
+        // If user is already logged
+        boolean logout = getIntent().getBooleanExtra("logout", true);
+        if (!logout) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+            return;
+        }
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPsw = findViewById(R.id.editTextPsw);
@@ -49,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = editTextPsw.getText().toString();
             progressBar.setVisibility(View.VISIBLE);
 
-            // Enter a valide email & psw
+            // Enter a valid email & psw
             if (email.isEmpty()) {
                 editTextEmail.setError("Texbox cannot be empty !");
                 return;

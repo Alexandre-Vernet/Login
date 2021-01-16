@@ -25,8 +25,6 @@ public class ProfilActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
-    String userId;
-
     TextView textViewFirstName, textViewLastName, textViewPhone;
 
     private static final String TAG = "ProfilActivity";
@@ -39,13 +37,13 @@ public class ProfilActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        userId = fAuth.getCurrentUser().getUid();
+        String userId = fAuth.getCurrentUser().getUid();
 
         textViewFirstName = findViewById(R.id.textViewFirstName);
         textViewLastName = findViewById(R.id.textViewLastName);
         textViewPhone = findViewById(R.id.textViewPhone);
 
-
+        // Display information of logged user
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, (value, error) -> {
             textViewFirstName.setText(value.getString("firstName"));
